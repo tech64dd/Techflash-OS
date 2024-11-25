@@ -16,6 +16,29 @@ it kinda just barfs some messages on to the screen and down the serial port.
 
   * `cd Techflash-OS`
 
+* Install xorroiso (command for Arch Linux)
+
+  * `sudo pacman -S xorroiso`
+
+* Run make
+
+  * `make`
+
+* Done! &nbsp;You should now have a bootable ISO image in `bin/TFOS_ISO.iso`.
+
+
+<details>
+ 
+<summary>Old build guide (deprecated)</summary>
+ 
+* Clone the repo
+
+  * `git clone https://github.com/techflashYT/Techflash-OS.git`
+
+* cd into the folder
+
+  * `cd Techflash-OS`
+
 * Run the interactive configuration script
 
   * `./configure`
@@ -25,6 +48,10 @@ it kinda just barfs some messages on to the screen and down the serial port.
   * `./all.sh` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(This might take a while, so give it about a minute)
 
 * Done! &nbsp;You should now have a bootable ISO image in `bin/TFOS_ISO.iso`.
+
+ 
+</details>
+
 
 # Booting
 
