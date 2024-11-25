@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
+#include <stdint.h>
 #define MALLOC_DEBUG
 #ifdef MALLOC_DEBUG
 #define NUM_TESTS 1000
@@ -20,7 +20,7 @@
 
 
 static int previousProgress = 0;
-static bool last = true;
+static int last = true;
 static void handleProgress(int prog, int max) {
 	int currentProgress = prog / (max / PROG_BAR_WIDTH);
 	if (currentProgress != previousProgress) {

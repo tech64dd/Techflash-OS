@@ -9,10 +9,10 @@ extern uint16_t TTY_Height;
 extern uint32_t TTY_Color;
 extern uint32_t TTY_BgColor;
 
-extern bool     TTY_Bold;
+extern int     TTY_Bold;
 
 extern TTY_WriteFunc_t TTY_WriteFunc;
 
 extern void TTY_SetWriteFunc(TTY_WriteFunc_t func);
 extern void TTY_Write(const char ch, const uint16_t x, const uint16_t y, const uint32_t fgColor, const uint32_t bgColor);
-extern bool TTY_HandleEsc(char ch);
+extern int TTY_HandleEsc(char ch);

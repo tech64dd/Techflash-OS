@@ -42,7 +42,7 @@
 */
 #include <stdint.h>
 #include <limits.h>
-#include <stdbool.h>
+#include <stdint.h>
 
 #include "printf.h"
 // This is unnecessary in C99, since compound initializers can be used,
@@ -180,7 +180,7 @@ static void outRev_(outputGadget_t* output, const char* buf, printfSize_t len, p
 
 // Invoked by printInt after the actual number has been printed, performing necessary
 // work on the number's prefix (as the number is initially printed in reverse order)
-static void printIntegerFinalization(outputGadget_t* output, char* buf, printfSize_t len, bool negative, numericBase_t base, printfSize_t precision, printfSize_t width, printfFlags_t flags) {
+static void printIntegerFinalization(outputGadget_t* output, char* buf, printfSize_t len, int negative, numericBase_t base, printfSize_t precision, printfSize_t width, printfFlags_t flags) {
 	printfSize_t unpadded_len = len;
 
 	// pad with leading zeros
@@ -244,7 +244,7 @@ static void printIntegerFinalization(outputGadget_t* output, char* buf, printfSi
 }
 
 // An internal itoa-like function
-static void printInt(outputGadget_t* output, printfUnsignedValue_t value, bool negative, numericBase_t base, printfSize_t precision, printfSize_t width, printfFlags_t flags) {
+static void printInt(outputGadget_t* output, printfUnsignedValue_t value, int negative, numericBase_t base, printfSize_t precision, printfSize_t width, printfFlags_t flags) {
 	char buf[PRINTF_INTEGER_BUFFER_SIZE];
 	printfSize_t len = 0U;
 
@@ -282,7 +282,7 @@ typedef struct {
 	int_fast64_t fractional;
 	// ... truncation of the actual fractional part of the double value, scaled
 	// by the precision value
-	bool is_negative;
+	int is_negative;
 } doubleComponents_t;
 
 #define NUM_DECIMAL_DIGITS_IN_INT64_T 18
@@ -335,7 +335,7 @@ static doubleComponents_t getComponents(double number, printfSize_t precision) {
 #if PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 typedef struct {
 	double rawFactor;
-	bool multiply; // if true, need to multiply by rawFactor; otherwise need to divide by it
+	int multiply; // if true, need to multiply by rawFactor; otherwise need to divide by it
 } scalingFactor_t;
 
 static double applyScaling(double num, scalingFactor_t normalization) {
@@ -369,12 +369,12 @@ static scalingFactor_t updateNormalization(scalingFactor_t sf, double extraMulti
 	return result;
 }
 
-static doubleComponents_t getNormalizedComponents(bool negative, printfSize_t precision, double nonNormalized, scalingFactor_t normalization, int flooredExp10) {
+static doubleComponents_t getNormalizedComponents(int negative, printfSize_t precision, double nonNormalized, scalingFactor_t normalization, int flooredExp10) {
 	doubleComponents_t components;
 	components.is_negative = negative;
 	double scaled = applyScaling(nonNormalized, normalization);
 
-	bool close_to_representation_extremum = ( (-flooredExp10 + (int) precision) >= DBL_MAX_10_EXP - 1 );
+	int close_to_representation_extremum = ( (-flooredExp10 + (int) precision) >= DBL_MAX_10_EXP - 1 );
 	if (close_to_representation_extremum) {
 		// We can't have a normalization factor which also accounts for the precision, i.e. moves
 		// some decimal digits into the mantissa, since it's unrepresentable, or nearly unrepresentable.
@@ -558,12 +558,12 @@ static double pow10Ofint(int flooredExp10) {
 }
 
 static void printExpontNum(outputGadget_t* output, double number, printfSize_t precision, printfSize_t width, printfFlags_t flags, char* buf, printfSize_t len) {
-	const bool negative = getSignBit(number);
+	const int negative = getSignBit(number);
 	// This number will decrease gradually (by factors of 10) as we "extract" the exponent out of it
 	double absNumber =  negative ? -number : number;
 
 	int flooredExp10;
-	bool absExp10CoveredByPowTbl;
+	int absExp10CoveredByPowTbl;
 	scalingFactor_t normalization;
 
 
@@ -591,7 +591,7 @@ static void printExpontNum(outputGadget_t* output, double number, printfSize_t p
 	// a 0 exponent-part width means "don't print the exponent"; a 0 decimal-part width
 	// means "use as many characters as necessary".
 
-	bool fallbackToDecOnly = false;
+	int fallbackToDecOnly = false;
 	if (flags & FLAGS_ADAPT_EXP) {
 		int required_significant_digits = (precision == 0) ? 1 : (int) precision;
 		// Should we want to fall-back to "%f" mode, and only print the decimal part?
@@ -608,7 +608,7 @@ static void printExpontNum(outputGadget_t* output, double number, printfSize_t p
 	}
 
 	normalization.multiply = (flooredExp10 < 0 && absExp10CoveredByPowTbl);
-	bool should_skip_normalization = (fallbackToDecOnly || flooredExp10 == 0);
+	int should_skip_normalization = (fallbackToDecOnly || flooredExp10 == 0);
 	doubleComponents_t decimalPartComponents =
 		should_skip_normalization ?
 		getComponents(negative ? -absNumber : absNumber, precision) :
@@ -670,7 +670,7 @@ static void printExpontNum(outputGadget_t* output, double number, printfSize_t p
 }
 #endif  // PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-static void printFloat(outputGadget_t* output, double value, printfSize_t precision, printfSize_t width, printfFlags_t flags, bool preferExponential) {
+static void printFloat(outputGadget_t* output, double value, printfSize_t precision, printfSize_t width, printfFlags_t flags, int preferExponential) {
 	char buf[PRINTF_DECIMAL_BUFFER_SIZE];
 	printfSize_t len = 0U;
 

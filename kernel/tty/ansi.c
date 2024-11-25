@@ -1,4 +1,4 @@
-#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -6,10 +6,10 @@
 #include <kernel/tty.h>
 #include <kernel/tty/fbCon.h>
 
-bool escapeCompleted = false;
+int escapeCompleted = false;
 char escapeSequence[256];
 int escapeSequenceLength = 0;
-bool TTY_HandleEsc(char ch) {
+int TTY_HandleEsc(char ch) {
     escapeSequence[escapeSequenceLength++] = ch;
     escapeSequence[escapeSequenceLength] = '\0';
 

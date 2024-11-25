@@ -4,7 +4,7 @@
 #include <kernel/tty.h>
 #include <kernel/bootloader.h>
 #include <stddef.h>
-#include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 
 framebuffer_t fbCon;
@@ -12,7 +12,7 @@ framebuffer_t fbCon;
 MODULE("FBCON");
 extern framebuffer_t LM_GetFramebuffer();
 
-static bool esc = false;
+static int esc = false;
 
 
 static void FBCON_ScrollMaybe() {
@@ -55,6 +55,7 @@ void FBCON_Write(const char ch, const uint16_t x, const uint16_t y, const uint32
 			TTY_CursorX += 4;
 			return;
 		}
+	default: break;
 	}
 	uint8_t *charData = font[(uint8_t)ch];
 	uint32_t offset = ((y * 16) * fbCon.width) + (x * 8);
@@ -90,7 +91,7 @@ void FBCON_Write(const char ch, const uint16_t x, const uint16_t y, const uint32
 	FBCON_ScrollMaybe();
 }
 
-static bool firstRun = true;
+static int firstRun = true;
 
 static void FBCON_InitSimple() {
 	if (BOOT_LoaderID == BOOT_LoaderID_LimineCompatible) {

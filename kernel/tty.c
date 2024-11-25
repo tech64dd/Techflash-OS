@@ -8,7 +8,7 @@ uint16_t TTY_Height;
 uint32_t TTY_Color;
 uint32_t TTY_BgColor;
 
-bool     TTY_Bold;
+int     TTY_Bold;
 
 TTY_WriteFunc_t TTY_WriteFunc;
 
