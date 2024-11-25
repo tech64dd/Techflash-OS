@@ -12,7 +12,7 @@ it kinda just barfs some messages on to the screen and down the serial port.
 
 * Clone the repo
 
-  * `git clone https://github.com/techflashYT/Techflash-OS.git`
+  * `git clone https://github.com/tech64dd/Techflash-OS.git`
 
 * cd into the folder
 
