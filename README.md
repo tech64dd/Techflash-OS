@@ -2,7 +2,9 @@
 
 # What is this?
 
-Yup, I actually did it, I (kinda) made an operating system!  
+A fixed version of Techflash-OS without compilin' errors and whatnot.
+
+Yup, (he) actually did it, (he) (kinda) made an operating system!  
 In its current state, it doesn't really do much,  
 it kinda just barfs some messages on to the screen and down the serial port.
 
