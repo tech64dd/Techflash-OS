@@ -16,6 +16,6 @@ jobs:
     - name: xorroiso
       run: sudo apt install xorroiso
     - name: make
-      run: make
+      run: make -Werror 
     
     
