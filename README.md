@@ -18,9 +18,9 @@ it kinda just barfs some messages on to the screen and down the serial port.
 
   * `cd Techflash-OS`
 
-* Install xorroiso (command for Arch Linux)
+* Install xorriso (command for Arch Linux)
 
-  * `sudo pacman -S xorroiso`
+  * `sudo pacman -S xorriso`
 
 * Run make
 
