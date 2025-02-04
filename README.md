@@ -63,7 +63,7 @@ Pretty easy, just set the ISO as the CD/DVD drive of the virtual machine and sta
 
 ### Real hardware
 
-* I ***HIGHLY*** recommend that you burn to a USB (or Re-Writeable CD/DVD) rather than to a regular CD/DVD. &nbsp;It would be a major waste of phyiscal discs since the USB can be rewritten, and a CD/DVD would be permanently written.
+* ~~I ***HIGHLY*** recommend that you burn to a CD/DVD (or Re-Writeable USB) rather than to a regular USB. &nbsp;It would be a major waste of phyiscal discs since the CD/DVD can't be rewritten, and a USB wouldn't be permanently written.~~
 
 * Some programs for this include: [Rufus (Burn to USB)](), &nbsp;[Ventoy (Boot ISO from USB)](), &nbsp;[Etcher (Burn to USB)](), &nbsp;or any generic ISO burner for burning to a CD/DVD.
 
